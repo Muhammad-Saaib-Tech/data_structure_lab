@@ -1,0 +1,71 @@
+// Lab Task 1: Student Registration System (Singly Linked List)
+#include <iostream>
+using namespace std;
+
+// One node = one student
+struct Node {
+    int rollNo;
+    Node* next;
+};
+
+Node* head = NULL;   // start of the list
+
+// 1 & 2. Add a new student (Roll Number) at the end of the list
+void addStudent(int rollNo) {
+    Node* newNode = new Node;
+    newNode->rollNo = rollNo;
+    newNode->next = NULL;
+
+    if (head == NULL) {          // list is empty
+        head = newNode;
+    } else {
+        Node* temp = head;
+        while (temp->next != NULL)   // walk to the last node
+            temp = temp->next;
+        temp->next = newNode;
+    }
+}
+
+// 3. Display all registered students
+void displayStudents() {
+    cout << "Registered Students:" << endl;
+    Node* temp = head;
+    while (temp != NULL) {
+        cout << temp->rollNo;
+        if (temp->next != NULL)
+            cout << " -> ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+// 4. Search for a student by Roll Number
+bool searchStudent(int rollNo) {
+    Node* temp = head;
+    while (temp != NULL) {
+        if (temp->rollNo == rollNo)
+            return true;
+        temp = temp->next;
+    }
+    return false;
+}
+
+int main() {
+    addStudent(101);
+    addStudent(105);
+    addStudent(108);
+    addStudent(112);
+
+    displayStudents();
+
+    int rollNo;
+    cout << endl << "Enter Roll Number to Search: ";
+    cin >> rollNo;
+
+    if (searchStudent(rollNo))
+        cout << "Student Found" << endl;
+    else
+        cout << "Student Not Found" << endl;
+
+    return 0;
+}
