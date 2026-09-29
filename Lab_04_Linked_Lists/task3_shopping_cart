@@ -1,0 +1,89 @@
+// Lab Task 3: Online Shopping Cart (Singly Linked List)
+#include <iostream>
+#include <string>
+using namespace std;
+
+// One node = one product in the cart
+struct Node {
+    string productID;
+    Node* next;
+};
+
+Node* head = NULL;
+
+// 1 & 2. Add a product (Product ID) to the end of the cart
+void addProduct(string id) {
+    Node* newNode = new Node;
+    newNode->productID = id;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        head = newNode;
+    } else {
+        Node* temp = head;
+        while (temp->next != NULL)
+            temp = temp->next;
+        temp->next = newNode;
+    }
+}
+
+// 3 & 5. Display all products in the cart
+void displayCart() {
+    Node* temp = head;
+    while (temp != NULL) {
+        cout << temp->productID;
+        if (temp->next != NULL)
+            cout << " -> ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+// 4. Remove a product using its Product ID
+void removeProduct(string id) {
+    if (head == NULL) {
+        cout << "Cart is empty." << endl;
+        return;
+    }
+
+    // Case 1: the product is the first node
+    if (head->productID == id) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+        return;
+    }
+
+    // Case 2: the product is somewhere after the first node
+    Node* current = head;
+    while (current->next != NULL && current->next->productID != id)
+        current = current->next;
+
+    if (current->next == NULL) {
+        cout << "Product not found." << endl;
+    } else {
+        Node* temp = current->next;         // the node to remove
+        current->next = temp->next;         // skip over it
+        delete temp;
+    }
+}
+
+int main() {
+    addProduct("P101");
+    addProduct("P205");
+    addProduct("P310");
+    addProduct("P415");
+
+    cout << "Shopping Cart:" << endl;
+    displayCart();
+
+    string id;
+    cout << endl << "Remove Product: ";
+    cin >> id;
+    removeProduct(id);
+
+    cout << endl << "Updated Cart:" << endl;
+    displayCart();
+
+    return 0;
+}
