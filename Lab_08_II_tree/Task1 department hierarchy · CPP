@@ -1,0 +1,50 @@
+// Lab 08 - Task 1: University Department Hierarchy (Binary Tree Creation)
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Node {
+public:
+    string name;
+    Node* left;
+    Node* right;
+
+    Node(string n) {
+        name = n;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+// Shows one member and who sits directly under them
+void displayMember(Node* node) {
+    if (node == NULL) return;
+
+    cout << node->name << endl;
+    cout << "   Left child  : " << (node->left  ? node->left->name  : "None") << endl;
+    cout << "   Right child : " << (node->right ? node->right->name : "None") << endl;
+    cout << endl;
+
+    displayMember(node->left);
+    displayMember(node->right);
+}
+
+int main() {
+    // Level 0: Head of Department
+    Node* hod = new Node("Dr. Ahmed (HOD)");
+
+    // Level 1: Coordinators
+    hod->left  = new Node("Dr. Sara (BS Coordinator)");
+    hod->right = new Node("Dr. Bilal (MS Coordinator)");
+
+    // Level 2: Faculty members
+    hod->left->left   = new Node("Mr. Usman (Lecturer)");
+    hod->left->right  = new Node("Ms. Hina (Lecturer)");
+    hod->right->left  = new Node("Mr. Kamran (Lecturer)");
+    hod->right->right = new Node("Ms. Ayesha (Lecturer)");
+
+    cout << "===== University Department Hierarchy =====" << endl << endl;
+    displayMember(hod);
+
+    return 0;
+}

@@ -1,0 +1,74 @@
+// Lab 08 - Task 3: Computer File Explorer (DFS Traversals)
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Node {
+public:
+    string folder;
+    Node* left;
+    Node* right;
+
+    Node(string f) {
+        folder = f;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+// In-order: Left -> Root -> Right
+void inorder(Node* node) {
+    if (node == NULL) return;
+    inorder(node->left);
+    cout << node->folder << "  ";
+    inorder(node->right);
+}
+
+// Pre-order: Root -> Left -> Right
+void preorder(Node* node) {
+    if (node == NULL) return;
+    cout << node->folder << "  ";
+    preorder(node->left);
+    preorder(node->right);
+}
+
+// Post-order: Left -> Right -> Root
+void postorder(Node* node) {
+    if (node == NULL) return;
+    postorder(node->left);
+    postorder(node->right);
+    cout << node->folder << "  ";
+}
+
+int main() {
+    Node* root = new Node("C:");
+
+    root->left  = new Node("Documents");
+    root->right = new Node("Programs");
+
+    root->left->left   = new Node("Photos");
+    root->left->right  = new Node("Music");
+    root->right->left  = new Node("Games");
+    root->right->right = new Node("Tools");
+
+    cout << "===== Computer File Explorer (DFS) =====" << endl << endl;
+
+    cout << "In-order   (Left -> Root -> Right) : ";
+    inorder(root);
+    cout << endl << endl;
+
+    cout << "Pre-order  (Root -> Left -> Right) : ";
+    preorder(root);
+    cout << endl << endl;
+
+    cout << "Post-order (Left -> Right -> Root) : ";
+    postorder(root);
+    cout << endl << endl;
+
+    cout << "----- Visiting order explained -----" << endl;
+    cout << "In-order   : go left first, visit the folder, then go right." << endl;
+    cout << "Pre-order  : visit the folder first, then left, then right." << endl;
+    cout << "Post-order : visit left and right first, the folder comes last." << endl;
+
+    return 0;
+}
